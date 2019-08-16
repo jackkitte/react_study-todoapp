@@ -1,24 +1,20 @@
 import React, {Component} from 'react';
 import './App.css';
+import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       todos: [],
-      newTodo: '',
     };
   }
 
-  handleChange(e) {
-    this.setState({newTodo: e.target.value});
-  }
-  addTodo() {
-    if (this.state.newTodo === '') return;
+  addTodo(newTodo) {
     const todos = this.state.todos;
-    todos.push(this.state.newTodo);
+    todos.push(newTodo);
     this.setState({todos: todos});
-    this.setState({newTodo: ''});
   }
   deleteTodo(i) {
     const todos = this.state.todos;
@@ -29,23 +25,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h3>My Todo</h3>
-        <input value={this.state.newTodo} onChange={this.handleChange.bind(this)} placeholder="Input here..." />
-        <button onClick={this.addTodo.bind(this)}>ADD</button>
-
-        <h5>Todo List</h5>
-        <ul>
-          {
-            this.state.todos.map((todo, i) => {
-              return (
-                <li key={i}>
-                  {todo}
-                  <button onClick={this.deleteTodo.bind(this, i)}>DEL</button>
-                </li>
-              )
-            })
-          }
-        </ul>
+        <TodoForm add={this.addTodo.bind(this)}></TodoForm>
+        <TodoList todos={this.state.todos} del={this.deleteTodo.bind(this)}></TodoList>
       </div>
     );
   }
