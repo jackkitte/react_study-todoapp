@@ -13,6 +13,9 @@ class TodoList extends Component {
     this.setState({todos: todos});
   }
 
+  addTodo() {
+    this.props.history.push('/todos/add');
+  }
   deleteTodo(i) {
     const todos = this.state.todos;
     todos.splice(i, 1);
@@ -23,6 +26,7 @@ class TodoList extends Component {
   render() {
     return (
       <div>
+        <button onClick={this.addTodo.bind(this)}>ADD</button>
         <h5>Todo List</h5>
         <ul>
           {
